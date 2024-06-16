@@ -13,7 +13,11 @@ void setup()
   Serial.begin(115200);
 
 #if USE_LOVYAN == 1
-  uint8_t inited = tft.init();
+  pinMode(GPIO_NUM_20, OUTPUT);
+  digitalWrite(GPIO_NUM_20, 1); // also try with 1
+  delay(100);
+
+  tft.init();
   // tft.initDMA();
   // tft.setRotation(1);
   // tft.setBrightness(255);
