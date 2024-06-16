@@ -1,3 +1,5 @@
+#if USE_LOVYAN == 1
+
 #include <LovyanGFX.hpp>
 
 class LGVX : public lgfx::LGFX_Device
@@ -19,7 +21,7 @@ public:
             auto cfg = _bus_instance.config(); // バス設定用の構造体を取得します。
 
             // SPIバスの設定
-            cfg.spi_host = SPI3_HOST; // 使用するSPIを選択  ESP32-S2,C3 : SPI2_HOST or SPI3_HOST / ESP32 : VSPI_HOST or HSPI_HOST
+            cfg.spi_host = SPI2_HOST; // 使用するSPIを選択  ESP32-S2,C3 : SPI2_HOST or SPI3_HOST / ESP32 : VSPI_HOST or HSPI_HOST
             // ※ ESP-IDFバージョンアップに伴い、VSPI_HOST , HSPI_HOSTの記述は非推奨になるため、エラーが出る場合は代わりにSPI2_HOST , SPI3_HOSTを使用してください。
             cfg.spi_mode = 0;                   // SPI通信モードを設定 (0 ~ 3)
             cfg.freq_write = 40000000;          // 送信時のSPIクロック (最大80MHz, 80MHzを整数で割った値に丸められます)
@@ -53,13 +55,13 @@ public:
             cfg.offset_x = 0;         // パネルのX方向オフセット量
             cfg.offset_y = 0;         // パネルのY方向オフセット量
             cfg.offset_rotation = 0;  // 回転方向の値のオフセット 0~7 (4~7は上下反転)
-            cfg.dummy_read_pixel = 8; // ピクセル読出し前のダミーリードのビット数
-            cfg.dummy_read_bits = 1;  // ピクセル以外のデータ読出し前のダミーリードのビット数
-            cfg.readable = false;     // データ読出しが可能な場合 trueに設定
+            cfg.dummy_read_pixel = 0; // ピクセル読出し前のダミーリードのビット数
+            cfg.dummy_read_bits = 0;  // ピクセル以外のデータ読出し前のダミーリードのビット数
+            cfg.readable = true;      // データ読出しが可能な場合 trueに設定
             cfg.invert = false;       // パネルの明暗が反転してしまう場合 trueに設定
-            cfg.rgb_order = false;    // パネルの赤と青が入れ替わってしまう場合 trueに設定
+            cfg.rgb_order = true;     // パネルの赤と青が入れ替わってしまう場合 trueに設定
             cfg.dlen_16bit = true;    // 16bitパラレルやSPIでデータ長を16bit単位で送信するパネルの場合 trueに設定
-            cfg.bus_shared = true;    // SDカードとバスを共有している場合 trueに設定(drawJpgFile等でバス制御を行います)
+            cfg.bus_shared = false;   // SDカードとバスを共有している場合 trueに設定(drawJpgFile等でバス制御を行います)
 
             // 以下はST7735やILI9163のようにピクセル数が可変のドライバで表示がずれる場合にのみ設定してください。
             //    cfg.memory_width     =   240;  // ドライバICがサポートしている最大の幅
@@ -82,3 +84,5 @@ public:
         setPanel(&_panel_instance); // 使用するパネルをセットします。
     }
 };
+
+#endif
