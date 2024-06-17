@@ -13,17 +13,12 @@ void setup()
   Serial.begin(115200);
 
 #if USE_LOVYAN == 1
-  pinMode(GPIO_NUM_20, OUTPUT);
-  digitalWrite(GPIO_NUM_20, 0); // also try with 1
-  delay(100);
-
   tft.init();
   tft.initDMA();
-  tft.setRotation(1);
-  // tft.setBrightness(255);
 
   tft.fillScreen(tft.color565(255, 255, 255));
   tft.fillCircle(100, 100, 50, tft.color565(255, 0, 0));
+  tft.fillCircle(150, 100, 50, tft.color565(0, 255, 0));
   tft.drawFastVLine(320 / 2, 0, 240, tft.color565(0, 255, 0));
 #else
   tft.init();

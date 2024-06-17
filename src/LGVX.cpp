@@ -54,7 +54,7 @@ public:
             cfg.panel_height = 320;   // 実際に表示可能な高さ
             cfg.offset_x = 0;         // パネルのX方向オフセット量
             cfg.offset_y = 0;         // パネルのY方向オフセット量
-            cfg.offset_rotation = 0;  // 回転方向の値のオフセット 0~7 (4~7は上下反転)
+            cfg.offset_rotation = 1;  // 回転方向の値のオフセット 0~7 (4~7は上下反転)
             cfg.dummy_read_pixel = 8; // ピクセル読出し前のダミーリードのビット数
             cfg.dummy_read_bits = 1;  // ピクセル以外のデータ読出し前のダミーリードのビット数
             cfg.readable = false;     // データ読出しが可能な場合 trueに設定
@@ -82,6 +82,10 @@ public:
         }
 
         setPanel(&_panel_instance); // 使用するパネルをセットします。
+
+        if (_panel_instance.config().pin_rst >= 0)
+            // lgfx::pinMode(_panel_instance.config().pin_rst, lgfx::output); // <-- not working
+            pinMode(_panel_instance.config().pin_rst, OUTPUT);
     }
 };
 
